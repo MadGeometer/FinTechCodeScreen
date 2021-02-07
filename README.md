@@ -1,7 +1,7 @@
 # Code Screen
 
 ## Introduction
-The problem is to write an Express/TypeScript app that, when JSON like
+The problem is to write an Express/TypeScript app that, when given JSON like
 ```
 {
     "data": "JOHN0000MICHAEL0009994567"
@@ -32,7 +32,7 @@ or (in the case of version 2)
 
 The API endpoints are:
 * /api/v1/parse (POST)
-* /api/v1/parse (POST)
+* /api/v2/parse (POST)
 
 ## Assumptions
 We assume that the data string consists of three length-delimited substrings 
@@ -63,7 +63,7 @@ The app can also be tested manually using Postman or the ```curl``` command.
 This application implements two different versions of an API. It is natural to keep 
 the implementation of these two versions somewhat separate. As such:
 * Routes for the two different versions are kept in two subfolders
-* The code has no cross-dependencies even though the implementation differs in only four lines
+* The code has no cross-dependencies even though the implementation differs in only a few lines
 * There are two separate unit test suites and they are almost identical, too.
 
 When organized in this manner, the evolution and support of the two versions can proceed independently.
@@ -79,7 +79,7 @@ Finally, the server is started, running on port 3000 by default.
 ### routes/v1/parse.ts and routes/v2/parse.ts
 Assuming that the input made it through the middleware test, the following checks are performed:
 * The input object has exactly one field, and it is called "data"
-* The "data" value is a string of length 25 characters
+* The "data" value is a string with exactly 25 characters.
 
 The "data" value is then broken into three substrings:
 * firstName will be first 8 characters
@@ -101,7 +101,7 @@ Based on the results of all these tests, either a response like this (in the cas
     }
 }
 ```
-or like this:
+or like this, in case of error:
 ```
 {
     "statusCode": 400,
